@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Login dengan Animasi Logo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(45deg, #FFA500, #FFD700);
+            overflow: hidden;
+        }
+
+        .logo-container {
+            position: absolute;
+            top: 50px;
+            text-align: center;
+            z-index: 2;
+        }
+
+        .logo {
+            width: 120px;
+            height: 120px;
+            position: relative;
+            margin: 0 auto 20px;
+        }
+
+        .logo-circle {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 3px solid transparent;
+            border-radius: 50%;
+            animation: rotate 4s linear infinite;
+        }
+
+        .logo-circle:nth-child(1) {
+            border-top-color: #FFA500;
+            animation-delay: 0s;
+        }
+
+        .logo-circle:nth-child(2) {
+            border-right-color: #FFD700;
+            animation-delay: 1s;
+        }
+
+        .logo-circle:nth-child(3) {
+            border-bottom-color: #FFA500;
+            animation-delay: 2s;
+        }
+
+        .logo-text {
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            opacity: 0;
+            animation: fadeInUp 1s ease forwards;
+            animation-delay: 1s;
+        }
+
+        .logo-dot {
+            position: absolute;
+            width: 8px;
+            height: 8px;
+            background: #fff;
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        .logo-dot:nth-child(1) { top: 20%; left: 20%; animation-delay: 0s; }
+        .logo-dot:nth-child(2) { top: 20%; right: 20%; animation-delay: 0.2s; }
+        .logo-dot:nth-child(3) { bottom: 20%; left: 20%; animation-delay: 0.4s; }
+        .logo-dot:nth-child(4) { bottom: 20%; right: 20%; animation-delay: 0.6s; }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.5; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(255, 165, 0, 0.2);
+            width: 100%;
+            max-width: 400px;
+            z-index: 1;
+            margin-top: 200px;
+            animation: slideUp 1s ease forwards;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .form-group label {
+            display: block;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 0 2px rgba(255, 165, 0, 0.2);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 8px;
+            background: #FFA500;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .login-btn:hover::before {
+            left: 100%;
+        }
+
+        .login-btn:hover {
+            background: #FF8C00;
+            transform: translateY(-2px);
+        }
+
+        .forgot-password {
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        .forgot-password a {
+            color: white;
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .forgot-password a:hover {
+            color: #FFA500;
+        }
+
+        .back-to-home {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .back-to-home:hover {
+            transform: translateX(-5px);
+            color: #FFA500;
+        }
+
+        .back-to-home::before {
+            content: '←';
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+
+        .back-to-home:hover::before {
+            transform: translateX(-5px);
+        }
+
+        .error-message {
+            color: #ff4444;
+            font-size: 0.9rem;
+            margin-top: 0.3rem;
+            display: none;
+        }
+
+        .form-group.error input {
+            border: 1px solid #FF4444;
+            background: rgba(255, 68, 68, 0.1);
+        }
+
+        .form-group.error .error-message {
+            display: block;
+        }
+
+        .success-message {
+            color: #FFA500;
+            font-size: 0.9rem;
+            margin-top: 0.3rem;
+            display: none;
+        }
+
+        .form-group.success input {
+            border: 1px solid #FFA500;
+            background: rgba(255, 165, 0, 0.1);
+        }
+
+        .form-group.success .success-message {
+            display: block;
+        }
+
+        @media (max-width: 480px) {
+            .form-group {
+                margin-bottom: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-to-home">Kembali ke Beranda</a>
+    
+    <div class="logo-container">
+        <div class="logo">
+            <div class="logo-circle"></div>
+            <div class="logo-circle"></div>
+            <div class="logo-circle"></div>
+            <div class="logo-dot"></div>
+            <div class="logo-dot"></div>
+            <div class="logo-dot"></div>
+            <div class="logo-dot"></div>
+        </div>
+        <div class="logo-text">VidaNest</div>
+    </div>
+
+    <div class="login-container">
+        <form id="loginForm" onsubmit="handleLogin(event)">
+            <div class="form-group" id="emailGroup">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required 
+                       pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                       title="Masukkan alamat email yang valid"
+                       oninput="validateEmail(this.value)">
+                <div class="error-message" id="emailError">
+                    Masukkan alamat email yang valid
+                </div>
+                <div class="success-message" id="emailSuccess">
+                    Email valid!
+                </div>
+            </div>
+            <div class="form-group" id="usernameGroup">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required 
+                       pattern="[a-zA-Z0-9_]{3,20}" 
+                       title="Username harus 3-20 karakter dan hanya boleh berisi huruf, angka, dan underscore"
+                       oninput="validateUsername(this.value)">
+                <div class="error-message" id="usernameError">
+                    Username harus 3-20 karakter dan hanya boleh berisi huruf, angka, dan underscore
+                </div>
+                <div class="success-message" id="usernameSuccess">
+                    Username valid!
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <button type="submit" class="login-btn">Masuk</button>
+            <div class="forgot-password">
+                <a href="#">Lupa Password?</a>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        function validateUsername(username) {
+            const usernameGroup = document.getElementById('usernameGroup');
+            const usernameError = document.getElementById('usernameError');
+            const usernameSuccess = document.getElementById('usernameSuccess');
+
+            // Hapus kelas error dan success sebelumnya
+            usernameGroup.classList.remove('error', 'success');
+
+            // Validasi panjang username
+            if (username.length < 3) {
+                usernameGroup.classList.add('error');
+                usernameError.textContent = 'Username harus minimal 3 karakter';
+                return false;
+            }
+
+            if (username.length > 20) {
+                usernameGroup.classList.add('error');
+                usernameError.textContent = 'Username maksimal 20 karakter';
+                return false;
+            }
+
+            // Validasi karakter yang diperbolehkan
+            const validUsername = /^[a-zA-Z0-9_]+$/.test(username);
+            if (!validUsername) {
+                usernameGroup.classList.add('error');
+                usernameError.textContent = 'Username hanya boleh berisi huruf, angka, dan underscore';
+                return false;
+            }
+
+            // Jika semua validasi berhasil
+            usernameGroup.classList.add('success');
+            return true;
+        }
+
+        function validateEmail(email) {
+            const emailGroup = document.getElementById('emailGroup');
+            const emailError = document.getElementById('emailError');
+            const emailSuccess = document.getElementById('emailSuccess');
+
+            // Hapus kelas error dan success sebelumnya
+            emailGroup.classList.remove('error', 'success');
+
+            // Validasi format email
+            const validEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
+            if (!validEmail) {
+                emailGroup.classList.add('error');
+                emailError.textContent = 'Masukkan alamat email yang valid';
+                return false;
+            }
+
+            // Jika validasi berhasil
+            emailGroup.classList.add('success');
+            return true;
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Validasi username dan email
+            if (!validateUsername(username) || !validateEmail(email)) {
+                return;
+            }
+
+            // Simulasi validasi login sederhana
+            if (username && email && password) {
+                // Simpan status login di localStorage
+                localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('username', username);
+                localStorage.setItem('email', email);
+                
+                // Tambahkan efek loading pada tombol
+                const loginBtn = document.querySelector('.login-btn');
+                loginBtn.innerHTML = 'Memproses...';
+                loginBtn.disabled = true;
+
+                // Simulasi delay proses login
+                setTimeout(() => {
+                    // Redirect ke homepage
+                    window.location.href = 'index.html';
+                }, 1500);
+            } else {
+                alert('Silakan isi semua field yang diperlukan!');
+            }
+        }
+    </script>
+</body>
+</html>

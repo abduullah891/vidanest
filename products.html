@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VidaNest - Produk</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(45deg, #FFD700, #FFA500);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            padding: 1rem 2rem;
+            background: rgba(255, 165, 0, 0.9);
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .user-name {
+            color: white;
+            font-weight: bold;
+        }
+
+        .logout-btn {
+            padding: 0.5rem 1rem;
+            background: #ff4444;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .logout-btn:hover {
+            background: #cc0000;
+        }
+
+        .products-container {
+            padding: 8rem 2rem 2rem;
+            display: flex;
+            gap: 2rem;
+            margin: 0;
+            justify-content: flex-start;
+        }
+
+        .product-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            width: 250px;
+            margin: 0;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .product-card:hover .product-image {
+            transform: scale(1.1);
+        }
+
+        .product-info {
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+        }
+
+        .product-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .product-card:hover .product-title {
+            color: white;
+        }
+
+        .product-price {
+            font-size: 1.25rem;
+            color: white;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover .product-price {
+            transform: scale(1.1);
+        }
+
+        .buy-button {
+            background: #FFD700;
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .buy-button:hover {
+            background: #FFA500;
+            transform: translateY(-2px);
+        }
+
+        .marketplace-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .marketplace-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 400px;
+            color: #333;
+            text-align: center;
+        }
+
+        .marketplace-title {
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            color: #333;
+        }
+
+        .marketplace-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .marketplace-btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .shopee-btn {
+            background: #ee4d2d;
+            color: white;
+        }
+
+        .tokopedia-btn {
+            background: #42b549;
+            color: white;
+        }
+
+        .marketplace-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <img src="logo.jpg" alt="VidaNest Logo" style="width: 40px; height: 40px; border-radius: 50%;">
+            <div class="logo-text">VidaNest</div>
+        </div>
+        <div class="nav-links">
+            <a href="index.html">Beranda</a>
+            <a href="products.html">Produk</a>
+            <a href="#about">Tentang</a>
+            <div class="user-profile" id="userProfile">
+                <span class="user-name" id="userName"></span>
+                <button class="logout-btn" onclick="handleLogout()">Keluar</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="products-container">
+        <div class="product-card">
+            <img src="mangkok.jpg" alt="Mangkok VidaNest" class="product-image">
+            <div class="product-info">
+                <h3 class="product-title">Mangkok VidaNest</h3>
+                <p class="product-price">Rp 99.000</p>
+                <button class="buy-button" onclick="handlePurchase('Mangkok VidaNest')">Beli Sekarang</button>
+            </div>
+        </div>
+        <div class="product-card">
+            <img src="sudut.jpg" alt="Sudut VidaNest" class="product-image">
+            <div class="product-info">
+                <h3 class="product-title">Sudut VidaNest</h3>
+                <p class="product-price">Rp 99.000</p>
+                <button class="buy-button" onclick="handlePurchase('Sudut VidaNest')">Beli Sekarang</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="marketplace-modal" id="marketplaceModal">
+        <button class="close-modal" onclick="hideMarketplaceModal()">×</button>
+        <div class="marketplace-content">
+            <h2 class="marketplace-title">Pilih Marketplace</h2>
+            <div class="marketplace-buttons">
+                <a href="https://shopee.co.id" target="_blank" class="marketplace-btn shopee-btn">
+                    <img src="shoopee.jpg" alt="Shopee" style="width: 24px; height: 24px;">
+                    Shopee
+                </a>
+                <a href="https://www.tokopedia.com" target="_blank" class="marketplace-btn tokopedia-btn">
+                    <img src="tokopedia.jpg" alt="Tokopedia" style="width: 24px; height: 24px;">
+                    Tokopedia
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Cek status login saat halaman dimuat
+        document.addEventListener('DOMContentLoaded', function() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            const username = localStorage.getItem('username');
+            
+            if (!isLoggedIn) {
+                window.location.href = 'form-login.html';
+                return;
+            }
+
+            // Tampilkan nama pengguna
+            document.getElementById('userName').textContent = username;
+        });
+
+        function handleLogout() {
+            // Hapus data login
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('username');
+            
+            // Redirect ke halaman login
+            window.location.href = 'form-login.html';
+        }
+
+        function handlePurchase(productName) {
+            document.getElementById('marketplaceModal').style.display = 'flex';
+        }
+
+        function hideMarketplaceModal() {
+            document.getElementById('marketplaceModal').style.display = 'none';
+        }
+
+        // Tutup modal jika user klik di luar modal
+        window.onclick = function(event) {
+            const modal = document.getElementById('marketplaceModal');
+            if (event.target == modal) {
+                hideMarketplaceModal();
+            }
+        }
+    </script>
+</body>
+</html> 
